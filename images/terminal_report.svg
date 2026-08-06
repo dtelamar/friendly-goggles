@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1181" viewBox="0 0 1600 1181">
+<rect x="1" y="1" width="1598" height="1179" rx="18" fill="#0B1220" stroke="#344054" stroke-width="2"/>
+<path d="M18 1h1564a17 17 0 0 1 17 17v54H1V18A17 17 0 0 1 18 1Z" fill="#182230"/>
+<circle cx="34" cy="36" r="9" fill="#F97066"/>
+<circle cx="66" cy="36" r="9" fill="#FDB022"/>
+<circle cx="98" cy="36" r="9" fill="#32D583"/>
+<text x="800" y="44" text-anchor="middle" fill="#98A2B3" font-family="DejaVu Sans, sans-serif" font-size="22">DriveSense — sample trip</text>
+<text x="64" y="126" fill="#7CD4FD" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">$ python main.py sample_data/drive_log.csv --output-dir images</text>
+<text x="64" y="155" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400"></text>
+<text x="64" y="184" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="700">DriveSense Trip Report</text>
+<text x="64" y="213" fill="#667085" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">======================</text>
+<text x="64" y="242" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Source: sample_data/drive_log.csv</text>
+<text x="64" y="271" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400"></text>
+<text x="64" y="300" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="700">Trip Summary</text>
+<text x="64" y="329" fill="#667085" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">------------</text>
+<text x="64" y="358" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Drive time: 10m 00s</text>
+<text x="64" y="387" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Average RPM: 2,964.9</text>
+<text x="64" y="416" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Minimum RPM: 748</text>
+<text x="64" y="445" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Maximum RPM: 5,790</text>
+<text x="64" y="474" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Average speed: 54.5 km/h</text>
+<text x="64" y="503" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Maximum speed: 112.3 km/h</text>
+<text x="64" y="532" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Average throttle: 19.8%</text>
+<text x="64" y="561" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Average coolant: 90.9 °C</text>
+<text x="64" y="590" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Peak coolant: 105.6 °C</text>
+<text x="64" y="619" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Average intake air: 29.1 °C</text>
+<text x="64" y="648" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400"></text>
+<text x="64" y="677" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="700">Driving Behavior</text>
+<text x="64" y="706" fill="#667085" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">----------------</text>
+<text x="64" y="735" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Idle time: 1m 25s</text>
+<text x="64" y="764" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Aggressive acceleration events: 1</text>
+<text x="64" y="793" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Hard braking events: 2</text>
+<text x="64" y="822" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">High coolant events: 1</text>
+<text x="64" y="851" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Driver score: 67/100</text>
+<text x="64" y="880" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">Classification: Aggressive Driver</text>
+<text x="64" y="909" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400"></text>
+<text x="64" y="938" fill="#E4E7EC" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="700">Generated Plots</text>
+<text x="64" y="967" fill="#667085" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">---------------</text>
+<text x="64" y="996" fill="#98A2B3" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">- images/rpm_vs_time.png</text>
+<text x="64" y="1025" fill="#98A2B3" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">- images/speed_vs_time.png</text>
+<text x="64" y="1054" fill="#98A2B3" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">- images/throttle_vs_time.png</text>
+<text x="64" y="1083" fill="#98A2B3" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">- images/coolant_vs_time.png</text>
+<text x="64" y="1112" fill="#98A2B3" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400">- images/throttle_vs_rpm.png</text>
+</svg>
