@@ -4,8 +4,8 @@ DriveSense is a modular Python application for analyzing automotive telemetry
 logs and turning raw vehicle signals into trip statistics, engineering plots,
 and driving-behavior metrics.
 
-> **Status:** MVP development in progress. The initial release uses CSV logs;
-> the data-source boundary is designed for later OBD-II and CAN bus integration.
+> **Status:** The CSV-based command-line MVP is operational. The data-source
+> boundary is designed for later OBD-II and CAN bus integration.
 
 ## Project goals
 
@@ -95,6 +95,7 @@ includes the 105 °C high-temperature threshold used by the metrics module.
 |-- analyzer.py         # Trip and engine summary statistics
 |-- metrics.py          # Driving-event detection and scoring
 |-- graphs.py           # Telemetry visualization
+|-- tests/              # Unit and end-to-end workflow tests
 |-- scripts/            # Reproducible development utilities
 |-- sample_data/        # Synthetic and real telemetry logs
 |-- images/             # Generated plots and README screenshots
@@ -103,11 +104,12 @@ includes the 105 °C high-temperature threshold used by the metrics module.
 `-- README.md
 ```
 
-## Planned MVP
+## MVP capabilities
 
-The first release will provide:
+The current release provides:
 
-- average and peak RPM, speed, coolant temperature, and intake temperature;
+- average and peak RPM, speed, and coolant temperature, plus average intake
+  temperature;
 - total drive time and idle time;
 - aggressive-acceleration and hard-braking event counts;
 - an explainable 0-100 driving score;
@@ -116,14 +118,23 @@ The first release will provide:
 
 ## Quick start
 
-The CLI will be enabled as the MVP modules are implemented.
-
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 python main.py sample_data/drive_log.csv
 ```
+
+The command validates the telemetry, prints a trip report, and writes five PNG
+plots to `output/`. Choose a different destination with `--output-dir`:
+
+```bash
+python main.py sample_data/drive_log.csv --output-dir trip_report
+```
+
+The bundled sample produces a 10-minute trip report with summary statistics,
+85 seconds of detected idle time, four grouped driving events, a 67/100 driver
+score, and an `Aggressive Driver` classification.
 
 Validate the committed synthetic sample independently with:
 
@@ -133,11 +144,10 @@ python -m unittest discover
 
 ## Roadmap
 
-1. Complete the CSV-based analysis MVP.
-2. Add an interactive Streamlit or Plotly dashboard.
-3. Stream live OBD-II data from an ESP32 over serial.
-4. Capture and decode raw CAN frames.
-5. Explore trip classification and fuel-economy models.
+1. Add an interactive Streamlit or Plotly dashboard.
+2. Stream live OBD-II data from an ESP32 over serial.
+3. Capture and decode raw CAN frames.
+4. Explore trip classification and fuel-economy models.
 
 ## License
 
