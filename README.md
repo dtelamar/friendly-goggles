@@ -1,5 +1,7 @@
 # DriveSense
 
+[![Tests](https://github.com/dtelamar/friendly-goggles/actions/workflows/tests.yml/badge.svg)](https://github.com/dtelamar/friendly-goggles/actions/workflows/tests.yml)
+
 DriveSense is a Python automotive telemetry analyzer that turns raw vehicle
 logs into clear trip statistics, driving-behavior events, and engineering
 plots. It works with signals such as engine RPM, vehicle speed, throttle
