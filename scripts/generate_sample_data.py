@@ -192,7 +192,11 @@ def write_csv(output_path: Path, seed: int) -> None:
     """Write the generated telemetry rows to ``output_path``."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8", newline="") as output_file:
-        writer = csv.DictWriter(output_file, fieldnames=COLUMNS)
+        writer = csv.DictWriter(
+            output_file,
+            fieldnames=COLUMNS,
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(generate_rows(seed))
 
