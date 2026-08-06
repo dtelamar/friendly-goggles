@@ -48,6 +48,10 @@ PIDs. Display layers may convert these values to mph or degrees Fahrenheit.
 | `intake_air_temperature_c` | degrees C | Intake-air temperature |
 | `engine_load_pct` | percent | Calculated engine load |
 
+The included sample is synthetic and reproducible. See
+[`docs/sample_data.md`](docs/sample_data.md) for its scenarios and generation
+method.
+
 ## Repository layout
 
 ```text
@@ -57,6 +61,7 @@ PIDs. Display layers may convert these values to mph or degrees Fahrenheit.
 |-- analyzer.py         # Trip and engine summary statistics
 |-- metrics.py          # Driving-event detection and scoring
 |-- graphs.py           # Telemetry visualization
+|-- scripts/            # Reproducible development utilities
 |-- sample_data/        # Synthetic and real telemetry logs
 |-- images/             # Generated plots and README screenshots
 |-- docs/               # Design notes and project documentation
@@ -84,6 +89,12 @@ python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 python main.py sample_data/drive_log.csv
+```
+
+Validate the committed synthetic sample independently with:
+
+```bash
+python -m unittest discover
 ```
 
 ## Roadmap
