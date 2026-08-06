@@ -52,6 +52,11 @@ The included sample is synthetic and reproducible. See
 [`docs/sample_data.md`](docs/sample_data.md) for its scenarios and generation
 method.
 
+The CSV loader accepts additional signal columns for forward compatibility but
+returns only the canonical schema above. It converts signals to numeric values,
+sorts rows by timestamp, and rejects missing fields, duplicate timestamps,
+non-finite values, and readings outside broad automotive sensor limits.
+
 ## Repository layout
 
 ```text
