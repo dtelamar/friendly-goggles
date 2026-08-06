@@ -51,6 +51,13 @@ loader is the only part tied to the current input format. A future OBD-II or
 CAN adapter only needs to return the same normalized columns for the rest of
 DriveSense to keep working.
 
+## Sample run
+
+This report comes directly from running the bundled 10-minute drive through the
+complete command-line workflow.
+
+![DriveSense command-line trip report](images/terminal_report.svg)
+
 ## Telemetry data
 
 DriveSense uses metric units that line up with common OBD-II signals.
@@ -105,6 +112,10 @@ Each run creates five headless PNG plots:
 
 The figures use deterministic filenames, so they can be regenerated from a new
 trip without changing the rest of the workflow.
+
+| Coolant temperature analysis | Throttle and engine-speed relationship |
+| --- | --- |
+| ![Coolant temperature][coolant-plot] | ![Throttle versus RPM][throttle-rpm-plot] |
 
 ## Try it
 
@@ -173,3 +184,6 @@ scoring, plot generation, command-line output, and expected failure paths.
 ## License
 
 License selection is pending before the first public release.
+
+[coolant-plot]: images/coolant_vs_time.svg
+[throttle-rpm-plot]: images/throttle_vs_rpm.svg
