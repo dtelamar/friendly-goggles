@@ -1,6 +1,6 @@
 # DriveSense
 
-[![Tests](https://github.com/dtelamar/friendly-goggles/actions/workflows/tests.yml/badge.svg)](https://github.com/dtelamar/friendly-goggles/actions/workflows/tests.yml)
+[![Tests](https://github.com/dtelamar/DriveSense/actions/workflows/tests.yml/badge.svg)](https://github.com/dtelamar/DriveSense/actions/workflows/tests.yml)
 
 DriveSense is a Python automotive telemetry analyzer that turns raw vehicle
 logs into clear trip statistics, driving-behavior events, and engineering
@@ -185,7 +185,7 @@ scoring, plot generation, command-line output, and expected failure paths.
 
 ## License
 
-License selection is pending before the first public release.
+No open-source license is included in this release.
 
 [coolant-plot]: images/coolant_vs_time.svg
 [throttle-rpm-plot]: images/throttle_vs_rpm.svg
