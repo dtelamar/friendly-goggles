@@ -62,6 +62,23 @@ trip duration; average, minimum, and maximum RPM; average and maximum speed;
 average throttle position; average and peak coolant temperature; and average
 intake-air temperature.
 
+## Driving metrics
+
+Rule-based event detection is intentionally explicit and configurable:
+
+| Metric | Detection rule |
+| --- | --- |
+| Idle | Speed at or below 0.5 km/h and RPM from 600 through 900 |
+| Aggressive acceleration | Throttle above 80% and RPM above 4,500 |
+| Hard braking | Longitudinal acceleration at or below -3.0 m/s² |
+| High coolant temperature | Coolant at or above 105 °C |
+
+Contiguous flagged samples count as one event. The driver score starts at 100
+and deducts 8 points per aggressive-acceleration event, 10 per hard-braking
+event, 5 per high-coolant interval, and 2 per started 30 seconds of idle beyond
+15% of the trip duration. Classification also considers severe-event count,
+idle ratio, and average throttle so its labels remain explainable.
+
 ## Repository layout
 
 ```text
