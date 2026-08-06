@@ -1,23 +1,40 @@
 # DriveSense
 
-DriveSense is a modular Python application for analyzing automotive telemetry
-logs and turning raw vehicle signals into trip statistics, engineering plots,
-and driving-behavior metrics.
+DriveSense is a Python automotive telemetry analyzer that turns raw vehicle
+logs into clear trip statistics, driving-behavior events, and engineering
+plots. It works with signals such as engine RPM, vehicle speed, throttle
+position, coolant temperature, intake-air temperature, and engine load.
 
-> **Status:** The CSV-based command-line MVP is operational. The data-source
-> boundary is designed for later OBD-II and CAN bus integration.
+The current version uses CSV data, so the full software pipeline can be tested
+without connecting to a car. The project is structured so that a live ESP32,
+OBD-II, or CAN bus source can be added later without rebuilding the analysis
+side of the application.
 
-## Project goals
+> **Status:** The CSV-based command-line MVP is complete and tested.
 
-- Parse and validate vehicle telemetry from a CSV file.
-- Calculate trip and engine summary statistics.
-- Detect idling, aggressive acceleration, and hard-braking events.
-- Generate clear plots for engine and vehicle signals.
-- Produce an explainable driver score and trip classification.
-- Support a future live ESP32/OBD-II data source without rewriting the analysis
-  and visualization layers.
+## Why I built it
 
-## Architecture
+I wanted to build something that connects software engineering to my interest
+in cars while showing more than one skill at a time. DriveSense gave me a way
+to work with Python, data validation, modular design, automotive signals,
+visualization, and testing in one project.
+
+Starting with CSV logs was a practical engineering decision. It let me finish
+and verify the software now instead of leaving the project as a half-built
+hardware prototype. When I add live vehicle data later, the analysis, metrics,
+and graphing modules can stay in place.
+
+## What it does
+
+- Loads and validates automotive telemetry from a CSV file
+- Calculates trip, engine, and temperature statistics
+- Detects idling, aggressive acceleration, hard braking, and high coolant
+  temperature events
+- Calculates an explainable driver score and classification
+- Creates five plots that show how the vehicle behaved throughout the trip
+- Prints a clean command-line trip report
+
+## How it works
 
 ```mermaid
 flowchart LR
@@ -29,14 +46,14 @@ flowchart LR
     E --> F
 ```
 
-The CSV loader is the first implementation of a data source. A future serial
-or CAN adapter can return the same normalized tabular schema to the rest of the
-application.
+Each module has one clear job. `main.py` coordinates the workflow, while the
+loader is the only part tied to the current input format. A future OBD-II or
+CAN adapter only needs to return the same normalized columns for the rest of
+DriveSense to keep working.
 
-## Telemetry schema
+## Telemetry data
 
-DriveSense stores telemetry in the metric units produced by standard OBD-II
-PIDs. Display layers may convert these values to mph or degrees Fahrenheit.
+DriveSense uses metric units that line up with common OBD-II signals.
 
 | Column | Unit | Description |
 | --- | --- | --- |
@@ -48,23 +65,20 @@ PIDs. Display layers may convert these values to mph or degrees Fahrenheit.
 | `intake_air_temperature_c` | degrees C | Intake-air temperature |
 | `engine_load_pct` | percent | Calculated engine load |
 
-The included sample is synthetic and reproducible. See
-[`docs/sample_data.md`](docs/sample_data.md) for its scenarios and generation
-method.
+The loader does more than call `read_csv` and hope for the best. It checks for
+required columns, converts each signal to a numeric type, sorts the data by
+time, and rejects duplicate timestamps, missing values, infinite values, and
+readings outside broad automotive sensor limits.
 
-The CSV loader accepts additional signal columns for forward compatibility but
-returns only the canonical schema above. It converts signals to numeric values,
-sorts rows by timestamp, and rejects missing fields, duplicate timestamps,
-non-finite values, and readings outside broad automotive sensor limits.
+The included drive log is synthetic on purpose. It gives the project a
+repeatable test drive with normal cruising, idling, aggressive acceleration,
+hard braking, and a short high-temperature event. The generation method is
+documented in [`docs/sample_data.md`](docs/sample_data.md).
 
-The trip analyzer converts normalized telemetry into a typed summary containing
-trip duration; average, minimum, and maximum RPM; average and maximum speed;
-average throttle position; average and peak coolant temperature; and average
-intake-air temperature.
+## Driving behavior
 
-## Driving metrics
-
-Rule-based event detection is intentionally explicit and configurable:
+The first version uses direct, configurable rules instead of hiding the logic
+inside a black-box model:
 
 | Metric | Detection rule |
 | --- | --- |
@@ -73,50 +87,26 @@ Rule-based event detection is intentionally explicit and configurable:
 | Hard braking | Longitudinal acceleration at or below -3.0 m/s² |
 | High coolant temperature | Coolant at or above 105 °C |
 
-Contiguous flagged samples count as one event. The driver score starts at 100
-and deducts 8 points per aggressive-acceleration event, 10 per hard-braking
-event, 5 per high-coolant interval, and 2 per started 30 seconds of idle beyond
-15% of the trip duration. Classification also considers severe-event count,
-idle ratio, and average throttle so its labels remain explainable.
+Contiguous flagged samples count as one event instead of several separate
+events. The driver score starts at 100 and applies documented penalties for
+aggressive acceleration, hard braking, high coolant temperature, and excessive
+idle time. That keeps the result easy to test and easy to explain: if the score
+changes, there is a specific event behind it.
 
 ## Generated plots
 
-The plotting module writes five headless, presentation-ready PNG files for each
-trip: RPM, speed, throttle position, and coolant temperature over elapsed time,
-plus a throttle-versus-RPM scatter colored by vehicle speed. The coolant plot
-includes the 105 °C high-temperature threshold used by the metrics module.
+Each run creates five headless PNG plots:
 
-## Repository layout
+- RPM over time
+- Vehicle speed over time
+- Throttle position over time
+- Coolant temperature over time, including the 105 °C threshold
+- Throttle position versus RPM, colored by vehicle speed
 
-```text
-.
-|-- main.py             # Command-line entry point
-|-- data_loader.py      # CSV loading and schema validation
-|-- analyzer.py         # Trip and engine summary statistics
-|-- metrics.py          # Driving-event detection and scoring
-|-- graphs.py           # Telemetry visualization
-|-- tests/              # Unit and end-to-end workflow tests
-|-- scripts/            # Reproducible development utilities
-|-- sample_data/        # Synthetic and real telemetry logs
-|-- images/             # Generated plots and README screenshots
-|-- docs/               # Design notes and project documentation
-|-- requirements.txt    # Runtime dependencies
-`-- README.md
-```
+The figures use deterministic filenames, so they can be regenerated from a new
+trip without changing the rest of the workflow.
 
-## MVP capabilities
-
-The current release provides:
-
-- average and peak RPM, speed, and coolant temperature, plus average intake
-  temperature;
-- total drive time and idle time;
-- aggressive-acceleration and hard-braking event counts;
-- an explainable 0-100 driving score;
-- RPM, speed, throttle, coolant, and throttle-versus-RPM plots; and
-- a command-line trip summary generated from a supplied CSV file.
-
-## Quick start
+## Try it
 
 ```bash
 python -m venv .venv
@@ -125,24 +115,55 @@ python -m pip install -r requirements.txt
 python main.py sample_data/drive_log.csv
 ```
 
-The command validates the telemetry, prints a trip report, and writes five PNG
-plots to `output/`. Choose a different destination with `--output-dir`:
+The command prints the trip report in the terminal and writes the plots to
+`output/`. A different destination can be supplied when needed:
 
 ```bash
 python main.py sample_data/drive_log.csv --output-dir trip_report
 ```
 
-The bundled sample produces a 10-minute trip report with summary statistics,
-85 seconds of detected idle time, four grouped driving events, a 67/100 driver
-score, and an `Aggressive Driver` classification.
+The bundled sample produces the following key results:
 
-Validate the committed synthetic sample independently with:
+| Result | Value |
+| --- | --- |
+| Drive time | 10 minutes |
+| Idle time | 1 minute, 25 seconds |
+| Aggressive acceleration events | 1 |
+| Hard braking events | 2 |
+| High coolant events | 1 |
+| Driver score | 67/100 |
+| Classification | Aggressive Driver |
+
+## Testing
+
+Run the complete test suite with:
 
 ```bash
 python -m unittest discover
 ```
 
-## Roadmap
+The tests cover CSV validation, summary calculations, event grouping, driver
+scoring, plot generation, command-line output, and expected failure paths.
+
+## Project structure
+
+```text
+.
+|-- main.py             # Command-line workflow and report output
+|-- data_loader.py      # CSV loading and schema validation
+|-- analyzer.py         # Trip and engine summary statistics
+|-- metrics.py          # Driving-event detection and scoring
+|-- graphs.py           # Telemetry visualization
+|-- tests/              # Unit and end-to-end workflow tests
+|-- scripts/            # Reproducible development utilities
+|-- sample_data/        # Synthetic telemetry log
+|-- images/             # Generated plots and README screenshots
+|-- docs/               # Design notes and project documentation
+|-- requirements.txt    # Runtime dependencies
+`-- README.md
+```
+
+## Next steps
 
 1. Add an interactive Streamlit or Plotly dashboard.
 2. Stream live OBD-II data from an ESP32 over serial.
