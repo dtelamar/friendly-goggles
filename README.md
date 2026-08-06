@@ -79,6 +79,13 @@ event, 5 per high-coolant interval, and 2 per started 30 seconds of idle beyond
 15% of the trip duration. Classification also considers severe-event count,
 idle ratio, and average throttle so its labels remain explainable.
 
+## Generated plots
+
+The plotting module writes five headless, presentation-ready PNG files for each
+trip: RPM, speed, throttle position, and coolant temperature over elapsed time,
+plus a throttle-versus-RPM scatter colored by vehicle speed. The coolant plot
+includes the 105 °C high-temperature threshold used by the metrics module.
+
 ## Repository layout
 
 ```text
