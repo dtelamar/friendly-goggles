@@ -57,6 +57,11 @@ returns only the canonical schema above. It converts signals to numeric values,
 sorts rows by timestamp, and rejects missing fields, duplicate timestamps,
 non-finite values, and readings outside broad automotive sensor limits.
 
+The trip analyzer converts normalized telemetry into a typed summary containing
+trip duration; average, minimum, and maximum RPM; average and maximum speed;
+average throttle position; average and peak coolant temperature; and average
+intake-air temperature.
+
 ## Repository layout
 
 ```text
